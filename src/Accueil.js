@@ -12,6 +12,11 @@ import StarIcon from '@material-ui/icons/StarBorder';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import Navbar from './Navigation/Navbar';
 
 const styles = theme => ({
   '@global': {
@@ -30,13 +35,13 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(900 + theme.spacing.unit * 3 * 2)]: {
-      width: 900,
+      width: '80%',
       marginLeft: 'auto',
       marginRight: 'auto',
     },
   },
   heroContent: {
-    maxWidth: 600,
+    maxWidth: '50%',
     margin: '0 auto',
     padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
   },
@@ -59,6 +64,48 @@ const styles = theme => ({
     borderTop: `1px solid ${theme.palette.divider}`,
     padding: `${theme.spacing.unit * 6}px 0`,
   },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.black, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.black, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    marginBottom: '15px',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing.unit,
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+    width: '100%',
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: 120,
+      '&:focus': {
+        width: 200,
+      },
+    },
+  },
 });
 
 class Accueil extends React.Component{
@@ -66,41 +113,102 @@ class Accueil extends React.Component{
     classes: PropTypes.object.isRequired,
   };*/
     render(){
-        const { classes } = this.props;
+      const { classes } = this.props;
+      const isMenuOpen = true;
         
     const tiers = [
         {
-        title: 'Free',
-        price: '0',
-        description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support'],
-        buttonText: 'Sign up for free',
-        buttonVariant: 'outlined',
+          title: 'Free',
+          price: '0',
+          description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support'],
+          buttonText: 'Sign up for free',
+          buttonVariant: 'outlined',
         },
         {
-        title: 'Pro',
-        subheader: 'Most popular',
-        price: '15',
-        description: [
-            '20 users included',
-            '10 GB of storage',
-            'Help center access',
-            'Priority email support',
-        ],
-        buttonText: 'Get started',
-        buttonVariant: 'contained',
+          title: 'Pro',
+          subheader: 'Most popular',
+          price: '15',
+          description: [
+              '20 users included',
+              '10 GB of storage',
+              'Help center access',
+              'Priority email support',
+          ],
+          buttonText: 'Get started',
+          buttonVariant: 'contained',
         },
         {
-        title: 'Enterprise',
-        price: '30',
-        description: [
-            '50 users included',
-            '30 GB of storage',
-            'Help center access',
-            'Phone & email support',
-        ],
-        buttonText: 'Contact us',
-        buttonVariant: 'outlined',
+          title: 'Enterprise',
+          price: '30',
+          description: [
+              '50 users included',
+              '30 GB of storage',
+              'Help center access',
+              'Phone & email support',
+          ],
+          buttonText: 'Contact us',
+          buttonVariant: 'outlined',
         },
+        {
+          title: 'Enterprise',
+          price: '30',
+          description: [
+              '50 users included',
+              '30 GB of storage',
+              'Help center access',
+              'Phone & email support',
+          ],
+          buttonText: 'Contact us',
+          buttonVariant: 'outlined',
+        },
+        {
+          title: 'Enterprise',
+          price: '30',
+          description: [
+              '50 users included',
+              '30 GB of storage',
+              'Help center access',
+              'Phone & email support',
+          ],
+          buttonText: 'Contact us',
+          buttonVariant: 'outlined',
+        },
+        {
+          title: 'Enterprise',
+          price: '30',
+          description: [
+              '50 users included',
+              '30 GB of storage',
+              'Help center access',
+              'Phone & email support',
+          ],
+          buttonText: 'Contact us',
+          buttonVariant: 'outlined',
+        },
+        {
+          title: 'Enterprise',
+          price: '30',
+          description: [
+              '50 users included',
+              '30 GB of storage',
+              'Help center access',
+              'Phone & email support',
+          ],
+          buttonText: 'Contact us',
+          buttonVariant: 'outlined',
+        },
+        {
+          title: 'Enterprise',
+          price: '30',
+          description: [
+              '50 users included',
+              '30 GB of storage',
+              'Help center access',
+              'Phone & email support',
+          ],
+          buttonText: 'Contact us',
+          buttonVariant: 'outlined',
+        }
     ];
     const footers = [
         {
@@ -120,39 +228,45 @@ class Accueil extends React.Component{
         description: ['Privacy policy', 'Terms of use'],
         },
     ];
+    const infos = {
+        title : 'Recherchez un restaurant',
+        searchPlaceholder : 'Recherche...',
+        description: 'Find Resto est une application web qui permet de vous chercher un restaurant du type de cuisine que vous voulez',
+
+    }
   
         return (
           <React.Fragment>
-            <CssBaseline />
-            <AppBar position="static" color="default" className={classes.appBar}>
-              <Toolbar>
-                <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-                  Company name
-                </Typography>
-                <Button>Features</Button>
-                <Button>Enterprise</Button>
-                <Button>Support</Button>
-                <Button color="primary" variant="outlined">
-                  Login
-                </Button>
-              </Toolbar>
-            </AppBar>
+            <Navbar></Navbar>
             <main className={classes.layout}>
               {/* Hero unit */}
               <div className={classes.heroContent}>
                 <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                  Pricing
+                  {infos.title}
                 </Typography>
+                
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    placeholder={infos.searchPlaceholder}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                  />
+                </div>
+
                 <Typography variant="h6" align="center" color="textSecondary" component="p">
-                  Quickly build an effective pricing table for your potential customers with this layout.
-                  It&apos;s built with default Material-UI components with little customization.
+                  {infos.description}
                 </Typography>
               </div>
               {/* End hero unit */}
               <Grid container spacing={40} alignItems="flex-end">
                 {tiers.map(tier => (
                   // Enterprise card is full width at sm breakpoint
-                  <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
+                  <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={3}>
                     <Card>
                       <CardHeader
                         title={tier.title}

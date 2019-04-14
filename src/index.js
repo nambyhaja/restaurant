@@ -8,6 +8,7 @@ import Login from './Admin/Login';
 import Notfound from './Error/NotFound';
 import Restaurant from './Components/Restaurant';
 import Accueil from './Accueil';
+import Ajout from './Admin/Ajout';
 
 
 // If you want your app to work offline and load faster, you can change
@@ -18,24 +19,11 @@ import Accueil from './Accueil';
 const routing = (
     <Router>
       <div>
-        <ul>
-            <li>
-            <Link to="/">Home</Link>
-            </li>
-            <li>
-            <Link to="/admin/ajout">Ajout</Link>
-            </li>
-            <li>
-            <Link to="/admin/login">Login</Link>
-            </li>
-            <li>
-            <Link to="/accueil">Accueil</Link>
-            </li>
-        </ul>
         <Switch>
-            <Route exact path="/" component={App} />
-            <Route path="/accueil" component={Accueil} />
-            <Route path="/admin/login" component={Login} />
+            <Route exact path="/" component={Accueil} />
+            <Route path="/app" component={App} />
+            <Route path="/admin/login" component={Ajout} />
+            <Route path="/admin/ajout" component={Login} />
             <Route path="/restaurant/:id" component={Restaurant} />
             <Route component={Notfound} />
         </Switch>
