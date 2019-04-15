@@ -17,6 +17,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Navbar from './Navigation/Navbar';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import PropTypes from 'prop-types';
 
 const styles = theme => ({
   '@global': {
@@ -44,20 +47,6 @@ const styles = theme => ({
     maxWidth: '50%',
     margin: '0 auto',
     padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
-  },
-  cardHeader: {
-    backgroundColor: theme.palette.grey[200],
-  },
-  cardPricing: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'baseline',
-    marginBottom: theme.spacing.unit * 2,
-  },
-  cardActions: {
-    [theme.breakpoints.up('sm')]: {
-      paddingBottom: theme.spacing.unit * 2,
-    },
   },
   footer: {
     marginTop: theme.spacing.unit * 8,
@@ -106,12 +95,26 @@ const styles = theme => ({
       },
     },
   },
+  card: {
+    maxWidth: '100%',
+  },
+  media: {
+    height: 200,
+  },
 });
 
 class Accueil extends React.Component{
    /* Accueil.propTypes = {
     classes: PropTypes.object.isRequired,
   };*/
+  constructor(props) {
+    super(props);
+  }
+
+  routeChange(path) {
+    this.props.history.push(path);
+  }
+
     render(){
       const { classes } = this.props;
       const isMenuOpen = true;
@@ -231,7 +234,8 @@ class Accueil extends React.Component{
     const infos = {
         title : 'Recherchez un restaurant',
         searchPlaceholder : 'Recherche...',
-        description: 'Find Resto est une application web qui permet de vous chercher un restaurant du type de cuisine que vous voulez',
+        description: 'Find Resto est une application web qui permet de vous chercher un restaurant du type de cuisine que vous voulez.',
+        restaurantList: 'Les restaurants disponibles'
 
     }
   
@@ -263,37 +267,35 @@ class Accueil extends React.Component{
                 </Typography>
               </div>
               {/* End hero unit */}
+              
+
+              <Typography variant="h3" align="left" color="textPrimary" gutterBottom>
+                  {infos.restaurantList}
+              </Typography>
               <Grid container spacing={40} alignItems="flex-end">
                 {tiers.map(tier => (
                   // Enterprise card is full width at sm breakpoint
                   <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={3}>
-                    <Card>
-                      <CardHeader
-                        title={tier.title}
-                        subheader={tier.subheader}
-                        titleTypographyProps={{ align: 'center' }}
-                        subheaderTypographyProps={{ align: 'center' }}
-                        action={tier.title === 'Pro' ? <StarIcon /> : null}
-                        className={classes.cardHeader}
-                      />
-                      <CardContent>
-                        <div className={classes.cardPricing}>
-                          <Typography component="h2" variant="h3" color="textPrimary">
-                            ${tier.price}
+                    <Card className={classes.card} onClick={()=>this.routeChange("/restaurant/3")}>
+                      <CardActionArea>
+                        <CardMedia
+                          className={classes.media}
+                          image="/static/images/cards/contemplative-reptile.jpg"
+                          title="Contemplative Reptile"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h5" component="h2">
+                            Lizard
                           </Typography>
-                          <Typography variant="h6" color="textSecondary">
-                            /mo
+                          <Typography component="p">
+                            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                            across all continents except Antarctica
                           </Typography>
-                        </div>
-                        {tier.description.map(line => (
-                          <Typography variant="subtitle1" align="center" key={line}>
-                            {line}
-                          </Typography>
-                        ))}
-                      </CardContent>
-                      <CardActions className={classes.cardActions}>
-                        <Button fullWidth variant={tier.buttonVariant} color="primary">
-                          {tier.buttonText}
+                        </CardContent>
+                      </CardActionArea>
+                      <CardActions>
+                        <Button size="small" margin="25px" color="primary">
+                          Visiter
                         </Button>
                       </CardActions>
                     </Card>
