@@ -1,22 +1,16 @@
 import React from 'react';
-import classNames from 'classnames';
-import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import StarIcon from '@material-ui/icons/StarBorder';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Navbar from './Navigation/Navbar';
+import Footer from './Navigation/Footer';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import PropTypes from 'prop-types';
@@ -29,9 +23,6 @@ const styles = theme => ({
   },
   appBar: {
     position: 'relative',
-  },
-  toolbarTitle: {
-    flex: 1,
   },
   layout: {
     width: 'auto',
@@ -47,11 +38,6 @@ const styles = theme => ({
     maxWidth: '50%',
     margin: '0 auto',
     padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
-  },
-  footer: {
-    marginTop: theme.spacing.unit * 8,
-    borderTop: `1px solid ${theme.palette.divider}`,
-    padding: `${theme.spacing.unit * 6}px 0`,
   },
   search: {
     position: 'relative',
@@ -104,21 +90,22 @@ const styles = theme => ({
 });
 
 class Accueil extends React.Component{
-   /* Accueil.propTypes = {
-    classes: PropTypes.object.isRequired,
-  };*/
   constructor(props) {
     super(props);
   }
-
   routeChange(path) {
     this.props.history.push(path);
   }
 
     render(){
+
+      Accueil.propTypes = {
+        classes: PropTypes.object.isRequired,
+      };
       const { classes } = this.props;
       const isMenuOpen = true;
-        
+      const restaurants = require('./base.json');
+      console.log(restaurants[1].nom);
     const tiers = [
         {
           title: 'Free',
@@ -213,24 +200,6 @@ class Accueil extends React.Component{
           buttonVariant: 'outlined',
         }
     ];
-    const footers = [
-        {
-        title: 'Company',
-        description: ['Team', 'History', 'Contact us', 'Locations'],
-        },
-        {
-        title: 'Features',
-        description: ['Cool stuff', 'Random feature', 'Team feature', 'Developer stuff', 'Another one'],
-        },
-        {
-        title: 'Resources',
-        description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-        },
-        {
-        title: 'Legal',
-        description: ['Privacy policy', 'Terms of use'],
-        },
-    ];
     const infos = {
         title : 'Recherchez un restaurant',
         searchPlaceholder : 'Recherche...',
@@ -275,12 +244,12 @@ class Accueil extends React.Component{
               <Grid container spacing={40} alignItems="flex-end">
                 {tiers.map(tier => (
                   // Enterprise card is full width at sm breakpoint
-                  <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={3}>
-                    <Card className={classes.card} onClick={()=>this.routeChange("/restaurant/3")}>
+                  <Grid item key={tier.title} xs={12} sm={6} md={3}>
+                    <Card className={classes.card} onClick={()=>this.routeChange("/restaurant/"+tier.price)}>
                       <CardActionArea>
                         <CardMedia
                           className={classes.media}
-                          image="/static/images/cards/contemplative-reptile.jpg"
+                          image={process.env.PUBLIC_URL + '/Pour-Fitbit-Versa-Cooljun-Nouveau-bracelet-en-cuir-de luxe.jpg'}
                           title="Contemplative Reptile"
                         />
                         <CardContent>
@@ -303,28 +272,9 @@ class Accueil extends React.Component{
                 ))}
               </Grid>
             </main>
-            {/* Footer */}
-            <footer className={classNames(classes.footer, classes.layout)}>
-              <Grid container spacing={32} justify="space-evenly">
-                {footers.map(footer => (
-                  <Grid item xs key={footer.title}>
-                    <Typography variant="h6" color="textPrimary" gutterBottom>
-                      {footer.title}
-                    </Typography>
-                    {footer.description.map(item => (
-                      <Typography key={item} variant="subtitle1" color="textSecondary">
-                        {item}
-                      </Typography>
-                    ))}
-                  </Grid>
-                ))}
-              </Grid>
-            </footer>
-            {/* End footer */}
+            <Footer></Footer>
           </React.Fragment>
         );
     }
 }
-
-
 export default withStyles(styles)(Accueil);

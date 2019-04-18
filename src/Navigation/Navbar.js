@@ -72,40 +72,50 @@ const styles = theme => ({
       textDecoration: 'none',
   }
 });
-
-function SearchAppBar(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-            Find Resto
-          </Typography>
-          <div className={classes.grow} />
-            <Button>
-                <Link className={classes.link} underline="none" to="/" >Accueil</Link>
-            </Button>
-            <Button>
-                <Link className={classes.link} to="/admin/ajout" color="inherit" >Ajout</Link>
-            </Button>
-            <Button>
-                <Link className={classes.link} to="/admin/login">Login</Link>
-            </Button>
-            <Button color="inherit" variant="outlined">
-                  <Link className={classes.link} color="inherit" to="/admin/login">Login</Link>
-            </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+class NavBar extends React.Component{
+  constructor(props) {
+    super(props);
+  };
+  render(){
+    NavBar.propTypes = {
+      classes: PropTypes.object.isRequired,
+    };
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+              <MenuIcon />
+            </IconButton>
+            <Typography className={classes.title} variant="h6" color="inherit"  noWrap>
+              <Link className={classes.link} underline="none" to="/" >
+                Find Resto
+              </Link>
+            </Typography>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+              />
+            </div>
+            <div className={classes.grow} />
+              <Button>
+                  <Link className={classes.link} to="/admin/login">Login</Link>
+              </Button>
+              <Button color="inherit" variant="outlined">
+                    <Link className={classes.link} color="inherit" to="/admin/login">Login</Link>
+              </Button>
+          </Toolbar>
+        </AppBar> 
+      </div>
+    );
+  }
 }
-
-SearchAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(SearchAppBar);
+export default withStyles(styles)(NavBar);

@@ -4,10 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import tileData from './../tileData.json';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import tileData from './tileData';
 
 const styles = theme => ({
   root: {
@@ -20,9 +19,16 @@ const styles = theme => ({
   gridList: {
     width: 500,
     height: 450,
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: 'translateZ(0)',
+  },
+  titleBar: {
+    background:
+      'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
   icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
+    color: 'white',
   },
 });
 
@@ -31,28 +37,38 @@ const styles = theme => ({
  *
  * import image from 'path/to/image.jpg';
  * [etc...]
-*/
-
-function TitlebarGridList(props) {
+ *
+ * const tileData = [
+ *   {
+ *     img: image,
+ *     title: 'Image',
+ *     author: 'author',
+ *     featured: true,
+ *   },
+ *   {
+ *     [etc...]
+ *   },
+ * ];
+ */
+function AdvancedGridList(props) {
   const { classes } = props;
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={180} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component="div">December</ListSubheader>
-        </GridListTile>
+      <GridList cellHeight={200} spacing={1} className={classes.gridList}>
         {tileData.map(tile => (
-          <GridListTile key={tile.img}>
+          <GridListTile key={tile.img} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
               title={tile.title}
-              subtitle={<span>by: {tile.author}</span>}
+              titlePosition="top"
               actionIcon={
                 <IconButton className={classes.icon}>
-                  <InfoIcon />
+                  <StarBorderIcon />
                 </IconButton>
               }
+              actionPosition="left"
+              className={classes.titleBar}
             />
           </GridListTile>
         ))}
@@ -61,8 +77,8 @@ function TitlebarGridList(props) {
   );
 }
 
-TitlebarGridList.propTypes = {
+AdvancedGridList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TitlebarGridList);
+export default withStyles(styles)(AdvancedGridList);
