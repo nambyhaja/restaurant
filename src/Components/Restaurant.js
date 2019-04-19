@@ -20,6 +20,20 @@ import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import tileData from './../tileData.json';
 
+//for Table
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+//import Full Width Tabs
+import FullWidthTabs from './FullWidthTabs';
+
+//import Complex Grid
+import ComplexGrid from './Grids/ComplexGrid';
+
 const styles = theme => ({
   '@global': {
     body: {
@@ -31,10 +45,8 @@ const styles = theme => ({
   },
   layout: {
     width: 'auto',
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(900 + theme.spacing.unit * 3 * 2)]: {
-      width: '80%',
+      width: '95%',
       marginLeft: 'auto',
       marginRight: 'auto',
     },
@@ -94,13 +106,22 @@ const styles = theme => ({
   },
   //for plats css
   gridList: {
-    width: 500,
     height: 800,
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
 });
+
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 
 class Restaurant extends React.Component{
   constructor(props) {
@@ -220,6 +241,19 @@ class Restaurant extends React.Component{
         restaurantList: 'Les restaurants disponibles'
 
     }
+    const rows = [
+      createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+      createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+      createData('Eclair', 262, 16.0, 24, 6.0),
+      createData('Cupcake', 305, 3.7, 67, 4.3),
+      createData('Gingerbread', 356, 16.0, 49, 3.9),
+    ];
+
+    let id = 0;
+    function createData(name, calories, fat, carbs, protein) {
+      id += 1;
+      return { id, name, calories, fat, carbs, protein };
+    }
   
         return (
           <React.Fragment>
@@ -235,58 +269,50 @@ class Restaurant extends React.Component{
                 </Typography>
               </div>
               {/* End hero unit */}
-              <Grid container spacing={40} alignItems="flex-end">
-                  <Grid item xs={12} sm={6} md={6}>
+              <Grid container spacing={40} alignItems="flex-start">
+                  <Grid item xs={12} sm={6} md={4}>
                     <Typography variant="h2" align="center" color="primary" gutterBottom>
                       Menus
                     </Typography>
-                    <Card className={classes.card} onClick={()=>this.routeChange("/restaurant/")}>
-                      <CardActionArea>
-                        <CardMedia
-                          className={classes.media}
-                          image={process.env.PUBLIC_URL + '/Pour-Fitbit-Versa-Cooljun-Nouveau-bracelet-en-cuir-de luxe.jpg'}
-                          title="Contemplative Reptile"
-                        />
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            Lizard
-                          </Typography>
-                          <Typography component="p">
-                            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                            across all continents except Antarctica
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                      <CardActions>
-                        <Button size="small" margin="25px" color="primary">
-                          Visiter
-                        </Button>
-                      </CardActions>
-                    </Card>
+                    {restaurants[0].menus.map(row=>(
+                      <ComplexGrid></ComplexGrid>
+                    ))}
                   </Grid>
-                  <Grid item xs={12} sm={6} md={6}>
-                    <GridList cellHeight={180} className={classes.gridList}>
-                      <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                        <ListSubheader component="div">
-                        <Typography variant="h2" align="center" color="primary" gutterBottom>
-                          Plats
-                        </Typography></ListSubheader>
-                      </GridListTile>
-                      {tileData.map(tile => (
-                        <GridListTile key={tile.img}>
-                          <img src={process.env.PUBLIC_URL+tile.img} alt={tile.title} />
-                          <GridListTileBar
-                            title={tile.title}
-                            subtitle={<span>by: {tile.author}</span>}
-                            actionIcon={
-                          <IconButton className={classes.icon}>
-                                <InfoIcon />
-                          </IconButton>
-                            }
-                         />
-                        </GridListTile>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Typography variant="h2" align="center" color="primary" gutterBottom>
+                        Plats
+                    </Typography>
+                    <FullWidthTabs
+                    plats={restaurants[0].plats}></FullWidthTabs>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                  <Typography variant="h2" align="center" color="primary" gutterBottom>
+                      Commande
+                  </Typography>
+                  <Paper className={classes.root}>
+                    <Table className={classes.table}>
+                      <TableHead>
+                        <TableRow>
+                          <CustomTableCell>Plat</CustomTableCell>
+                          <CustomTableCell align="center">Unité</CustomTableCell>
+                          <CustomTableCell align="center">Prix unitaire</CustomTableCell>
+                          <CustomTableCell align="center">Prix total</CustomTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows.map(row => (
+                          <TableRow className={classes.row} key={row.id}>
+                            <CustomTableCell component="th" scope="row">
+                              {row.name}
+                            </CustomTableCell>
+                            <CustomTableCell align="right">{row.calories}</CustomTableCell>
+                            <CustomTableCell align="right">{row.fat}</CustomTableCell>
+                            <CustomTableCell align="right">{row.carbs}</CustomTableCell>
+                          </TableRow>
                         ))}
-                      </GridList>
+                      </TableBody>
+                    </Table>
+                  </Paper>
                   </Grid>
               </Grid>
             </main>

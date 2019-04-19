@@ -8,8 +8,6 @@ import Login from './Admin/Login';
 import Notfound from './Error/NotFound';
 import Restaurant from './Components/Restaurant';
 import Accueil from './Accueil';
-import Ajout from './Admin/Ajout';
-
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
@@ -23,7 +21,6 @@ const routing = (
             <Route exact path="/" component={Accueil} />
             <Route path="/app" component={App} />
             <Route path="/admin/login" component={Login} />
-            <Route path="/admin/ajout" component={Ajout} />
             <Route path="/restaurant/:id" component={Restaurant} />
             <Route component={Notfound} />
         </Switch>

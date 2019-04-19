@@ -242,23 +242,22 @@ class Accueil extends React.Component{
                   {infos.restaurantList}
               </Typography>
               <Grid container spacing={40} alignItems="flex-end">
-                {tiers.map(tier => (
+                {restaurants.map(restaurant => (
                   // Enterprise card is full width at sm breakpoint
-                  <Grid item key={tier.title} xs={12} sm={6} md={3}>
-                    <Card className={classes.card} onClick={()=>this.routeChange("/restaurant/"+tier.price)}>
+                  <Grid item key={restaurant.nom} xs={12} sm={6} md={3}>
+                    <Card className={classes.card} onClick={()=>this.routeChange("/restaurant/"+restaurant.index)}>
                       <CardActionArea>
                         <CardMedia
                           className={classes.media}
-                          image={process.env.PUBLIC_URL + '/Pour-Fitbit-Versa-Cooljun-Nouveau-bracelet-en-cuir-de luxe.jpg'}
+                          image={process.env.PUBLIC_URL + "restaurants/"+ restaurant.photo}
                           title="Contemplative Reptile"
                         />
                         <CardContent>
                           <Typography gutterBottom variant="h5" component="h2">
-                            Lizard
+                            {restaurant.nom}
                           </Typography>
                           <Typography component="p">
-                            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                            across all continents except Antarctica
+                            {restaurant.description}
                           </Typography>
                         </CardContent>
                       </CardActionArea>
