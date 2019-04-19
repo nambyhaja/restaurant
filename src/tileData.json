@@ -1,12 +1,52 @@
 [
     {
-      "img": "test.jpg",
-      "'title": "Test",
+      "img": "/plats/bike.jpg",
+      "'title": "Bike",
       "author": "author"
     },
     {
-        "img": "test.jpg",
-        "title": "Test",
+        "img": "/plats/breakfast.jpg",
+        "title": "Breakfast",
         "author": "author"
+    },
+    {
+      "img": "/plats/burgers.jpg",
+      "title": "Burgers",
+      "author": "author"
+    },
+    {
+      "img": "/plats/camera.jpg",
+      "title": "Camera",
+      "author": "author"
+    },
+    {
+      "img": "/plats/hats.jpg",
+      "title": "Hats",
+      "author": "author"
+    },
+    {
+      "img": "/plats/honey.jpg",
+      "title": "Honey",
+      "author": "author"
+    },
+    {
+      "img": "/plats/morning.jpg",
+      "title": "Morning",
+      "author": "author"
+    },
+    {
+      "img": "/plats/mushroom.jpg",
+      "title": "Mushroom",
+      "author": "author"
+    },
+    {
+      "img": "/plats/olive.jpg",
+      "title": "Olive",
+      "author": "author"
+    },
+    {
+      "img": "/plats/plant.jpg",
+      "title": "Plant",
+      "author": "author"
     }
 ]

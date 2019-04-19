@@ -22,8 +22,8 @@ const routing = (
         <Switch>
             <Route exact path="/" component={Accueil} />
             <Route path="/app" component={App} />
-            <Route path="/admin/login" component={Ajout} />
-            <Route path="/admin/ajout" component={Login} />
+            <Route path="/admin/login" component={Login} />
+            <Route path="/admin/ajout" component={Ajout} />
             <Route path="/restaurant/:id" component={Restaurant} />
             <Route component={Notfound} />
         </Switch>
@@ -33,4 +33,4 @@ const routing = (
   
 ReactDOM.render(routing, document.getElementById('root'));
 
-serviceWorker.unregister();
+serviceWorker.unregister(); 
