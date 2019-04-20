@@ -7,6 +7,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
+import AddIcon from '@material-ui/icons/Add';
 import tileData from './../../tileData';
 
 const styles = theme => ({
@@ -18,7 +19,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    height: 450,
+    height: 500,
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
@@ -30,20 +31,20 @@ class TitlebarGridList extends React.Component{
         super(props);
     }
     render(){
-        const { classes } = this.props;
+        const { classes , plats} = this.props;
 
   return (
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>
-        {tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+        {plats.map(plat => (
+          <GridListTile key={plat.photo}>
+            <img src={process.env.PUBLIC_URL + "plats/" + plat.photo} alt={plat.nom} />
             <GridListTileBar
-              title={tile.title}
-              subtitle={<span>by: {tile.author}</span>}
+              title={plat.prix + " " + plat.nom }
+              subtitle={<span>{plat.description}</span>}
               actionIcon={
                 <IconButton className={classes.icon}>
-                  <InfoIcon />
+                  <AddIcon />
                 </IconButton>
               }
             />

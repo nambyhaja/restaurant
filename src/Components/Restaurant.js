@@ -34,6 +34,9 @@ import FullWidthTabs from './FullWidthTabs';
 //import Complex Grid
 import ComplexGrid from './Grids/ComplexGrid';
 
+import {connect} from 'react-redux';
+import base from './../base';
+
 const styles = theme => ({
   '@global': {
     body: {
@@ -126,19 +129,37 @@ const CustomTableCell = withStyles(theme => ({
 class Restaurant extends React.Component{
   constructor(props) {
     super(props);
+    this.state = {
+      restaurants:{},
+      restaurant: {},
+      inputValue:""
+    }
   }
   routeChange(path) {
     this.props.history.push(path);
   }
+  componentWillMount(){
+    this.ref = base.syncState("restaurants", {
+      context: this,
+      state: 'restaurants'
+    });
+  }
+
+  
+  componentWillUnmount() {
+    //console.log("Will unmount")
+    base.removeBinding(this.ref);
+  }
 
     render(){
-
+      const { match: { params } } = this.props;
+      let restaurantsList =  this.state.restaurants;
+      let restaurant = restaurantsList.find(restaurant => restaurant.index == params.id);
       Restaurant.propTypes = {
         classes: PropTypes.object.isRequired,
       };
       const { classes } = this.props;
       const {restaurants} = require('./../base.json');
-      console.log(restaurants[1].nom);
     const tiers = [
         {
           title: 'Free',
@@ -253,6 +274,9 @@ class Restaurant extends React.Component{
       id += 1;
       return { id, name, calories, fat, carbs, protein };
     }
+
+    //let restaurant =  Object.keys(this.state.restaurant);
+
   
         return (
           <React.Fragment>
@@ -261,28 +285,34 @@ class Restaurant extends React.Component{
               {/* Hero unit */}
               <div className={classes.heroContent}>
                 <Typography variant="h3" align="center" color="textPrimary" gutterBottom>
-                    New York Place
+                    {restaurant.nom}
                 </Typography>
                 <Typography variant="subtitle1" align="center" color="textPrimary" gutterBottom>
-                    Description
+                    {restaurant.description}
                 </Typography>
               </div>
               {/* End hero unit */}
               <Grid container spacing={40} alignItems="flex-start">
-                  <Grid item xs={12} sm={6} md={4}>
+                  <Grid item xs={12} sm={6} md={3}>
                     <Typography variant="h2" align="center" color="primary" gutterBottom>
                       Menus
                     </Typography>
-                    {restaurants[0].menus.map(row=>(
-                      <ComplexGrid></ComplexGrid>
+                    {restaurant.menus.map(row=>(
+                      <ComplexGrid
+                        nom={row.nom}
+                        prix = {row.prix}
+                        entree={row.entree}
+                        plat = {row.plat}
+                        dessert = {row.dessert}
+                      ></ComplexGrid>
                     ))}
                   </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
+                  <Grid item xs={12} sm={6} md={5}>
                     <Typography variant="h2" align="center" color="primary" gutterBottom>
                         Plats
                     </Typography>
                     <FullWidthTabs
-                    plats={restaurants[0].plats}></FullWidthTabs>
+                    plats={restaurant.carte.plats}></FullWidthTabs>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                   <Typography variant="h2" align="center" color="primary" gutterBottom>
@@ -321,5 +351,13 @@ class Restaurant extends React.Component{
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const id = ownProps.match.params.id;
+  const restaurant = state.restaurant.restaurants.find(r => r.index == id);
+  return{
+    restaurant : restaurant
+  }
+};
 
-export default withStyles(styles)(Restaurant);
+
+export default withStyles(styles)(connect(mapStateToProps,null)(Restaurant));

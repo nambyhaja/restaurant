@@ -43,7 +43,14 @@ class FullWidthTabs extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, 
+      theme,
+      plats } = this.props;
+
+      let typePlats = plats.filter(plat => plat.type == "plat");
+      let entrees = plats.filter(plat => plat.type == "entrée");
+      let dessert = plats.filter(plat => plat.type == "dessert");
+      console.log("plats "+ JSON.stringify(plats));
 
     return (
       <div className={classes.root}>
@@ -66,13 +73,18 @@ class FullWidthTabs extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-            <TitlebarGridList></TitlebarGridList>
+            <TitlebarGridList
+            plats={entrees}
+            ></TitlebarGridList>
           </TabContainer>
           <TabContainer dir={theme.direction}>
-            <TitlebarGridList></TitlebarGridList>
+            <TitlebarGridList
+            plats={typePlats}></TitlebarGridList>
           </TabContainer>
           <TabContainer dir={theme.direction}>
-            <TitlebarGridList></TitlebarGridList>
+            <TitlebarGridList
+              plats={dessert}
+            ></TitlebarGridList>
           </TabContainer>
         </SwipeableViews>
       </div>

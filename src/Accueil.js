@@ -207,9 +207,6 @@ class Accueil extends React.Component{
         context: this,
         state: 'restaurants'
       });
-      this.setState({
-        restaurantsFiltered:this.state.restaurants
-      })
     }
     
     componentWillUnmount() {

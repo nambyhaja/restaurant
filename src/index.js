@@ -8,11 +8,16 @@ import Login from './Admin/Login';
 import Notfound from './Error/NotFound';
 import Restaurant from './Components/Restaurant';
 import Accueil from './Accueil';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
+import rootReducer from './store/reducers/rootReducer'
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const routing = (
     <Router>
@@ -28,6 +33,6 @@ const routing = (
     </Router>
 )
   
-ReactDOM.render(routing, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}>{routing}</Provider>,document.getElementById('root'));
 
 serviceWorker.unregister(); 
