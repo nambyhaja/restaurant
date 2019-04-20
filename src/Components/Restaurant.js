@@ -137,7 +137,6 @@ class Restaurant extends React.Component{
         classes: PropTypes.object.isRequired,
       };
       const { classes } = this.props;
-      const isMenuOpen = true;
       const {restaurants} = require('./../base.json');
       console.log(restaurants[1].nom);
     const tiers = [

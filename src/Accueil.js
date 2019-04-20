@@ -94,11 +94,17 @@ class Accueil extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      restaurants: {}
+      restaurants: {},
+      inputValue:""
     }
   }
   routeChange(path) {
     this.props.history.push(path);
+  }
+  filterResto(event){
+    this.setState({
+      inputValue:event.target.value
+    });
   }
 
     render(){
@@ -106,116 +112,28 @@ class Accueil extends React.Component{
       Accueil.propTypes = {
         classes: PropTypes.object.isRequired,
       };
-      const { classes } = this.props;
-      const isMenuOpen = true;
+      const { classes ,
+      } = this.props;
       //const {restaurants} = require('./base.json');
-      let restaurants =  Object.keys(this.state.restaurants);
-      console.log(restaurants);
-    const tiers = [
-        {
-          title: 'Free',
-          price: '0',
-          description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support'],
-          buttonText: 'Sign up for free',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Pro',
-          subheader: 'Most popular',
-          price: '15',
-          description: [
-              '20 users included',
-              '10 GB of storage',
-              'Help center access',
-              'Priority email support',
-          ],
-          buttonText: 'Get started',
-          buttonVariant: 'contained',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        }
-    ];
-    const infos = {
+      let restaurantsfiltered =  Object.keys(this.state.restaurants);
+      console.log(restaurantsfiltered);
+      let restaurants = this.state.inputValue != "" ? restaurantsfiltered.filter(key=>this.state.restaurants[key].nom.toLowerCase().includes(this.state.inputValue.toLowerCase())) : restaurantsfiltered;
+      
+      
+      const infos = {
         title : 'Recherchez un restaurant',
         searchPlaceholder : 'Recherche...',
         description: 'Find Resto est une application web qui permet de vous chercher un restaurant du type de cuisine que vous voulez.',
         restaurantList: 'Les restaurants disponibles'
 
-    }
+       }
+       
+
   
         return (
           <React.Fragment>
-            <Navbar></Navbar>
+            <Navbar
+            ></Navbar>
             <main className={classes.layout}>
               {/* Hero unit */}
               <div className={classes.heroContent}>
@@ -228,6 +146,7 @@ class Accueil extends React.Component{
                     <SearchIcon />
                   </div>
                   <InputBase
+                    onChange={this.filterResto.bind(this)}
                     placeholder={infos.searchPlaceholder}
                     classes={{
                       root: classes.inputRoot,
@@ -247,24 +166,24 @@ class Accueil extends React.Component{
                   {infos.restaurantList}
               </Typography>
               <Grid container spacing={40} alignItems="flex-end">
-                {restaurants.map(restaurant => (
+                {restaurants.map(key => (
                   // Enterprise card is full width at sm breakpoint
-                  <Grid item key={restaurant.nom} xs={12} sm={6} md={3}>
-                    <Card className={classes.card} onClick={()=>this.routeChange("/restaurant/"+restaurant.index)}>
+                  <Grid item key={this.state.restaurants[key].nom} xs={12} sm={6} md={3}>
+                    <Card className={classes.card} onClick={()=>this.routeChange("/restaurant/"+this.state.restaurants[key].index)}>
                       <CardActionArea>
                         <CardMedia
                           className={classes.media}
-                          image={process.env.PUBLIC_URL + "restaurants/"+ restaurant.photo}
+                          image={process.env.PUBLIC_URL + "restaurants/"+ this.state.restaurants[key].photo}
                           title="Contemplative Reptile"
                         />
                         <CardContent>
                           <Typography gutterBottom variant="h5" component="h2">
-                            {restaurant.nom}
+                            {this.state.restaurants[key].nom}
                           </Typography>
                           <Typography component="p">
-                            {restaurant.description}
+                            {this.state.restaurants[key].description}
                           </Typography>
-                        </CardContent>
+                        </CardContent>  
                       </CardActionArea>
                       <CardActions>
                         <Button size="small" margin="25px" color="primary">
@@ -288,8 +207,11 @@ class Accueil extends React.Component{
         context: this,
         state: 'restaurants'
       });
+      this.setState({
+        restaurantsFiltered:this.state.restaurants
+      })
     }
-  
+    
     componentWillUnmount() {
       //console.log("Will unmount")
       base.removeBinding(this.ref);
