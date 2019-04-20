@@ -14,6 +14,7 @@ import Footer from './Navigation/Footer';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import PropTypes from 'prop-types';
+import base from './base';
 
 const styles = theme => ({
   '@global': {
@@ -92,6 +93,9 @@ const styles = theme => ({
 class Accueil extends React.Component{
   constructor(props) {
     super(props);
+    this.state = {
+      restaurants: {}
+    }
   }
   routeChange(path) {
     this.props.history.push(path);
@@ -104,8 +108,9 @@ class Accueil extends React.Component{
       };
       const { classes } = this.props;
       const isMenuOpen = true;
-      const restaurants = require('./base.json');
-      console.log(restaurants[1].nom);
+      //const {restaurants} = require('./base.json');
+      let restaurants =  Object.keys(this.state.restaurants);
+      console.log(restaurants);
     const tiers = [
         {
           title: 'Free',
@@ -274,6 +279,20 @@ class Accueil extends React.Component{
             <Footer></Footer>
           </React.Fragment>
         );
+    }
+
+    componentWillMount() {
+      //alert("toto")
+      // this runs right before the <App> is rendered
+      this.ref = base.syncState("restaurants", {
+        context: this,
+        state: 'restaurants'
+      });
+    }
+  
+    componentWillUnmount() {
+      //console.log("Will unmount")
+      base.removeBinding(this.ref);
     }
 }
 export default withStyles(styles)(Accueil);
