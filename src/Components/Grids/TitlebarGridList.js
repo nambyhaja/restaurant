@@ -10,6 +10,9 @@ import InfoIcon from '@material-ui/icons/Info';
 import AddIcon from '@material-ui/icons/Add';
 import tileData from './../../tileData';
 
+import {insertOrder} from './../../store/actions/orderActions';
+import {connect} from 'react-redux';
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -31,7 +34,7 @@ class TitlebarGridList extends React.Component{
         super(props);
     }
     render(){
-        const { classes , plats} = this.props;
+        const { classes , plats, insertOrder} = this.props;
 
   return (
     <div className={classes.root}>
@@ -43,7 +46,7 @@ class TitlebarGridList extends React.Component{
               title={plat.prix + " " + plat.nom }
               subtitle={<span>{plat.description}</span>}
               actionIcon={
-                <IconButton className={classes.icon}>
+                <IconButton onClick={()=>insertOrder(plat)} className={classes.icon}>
                   <AddIcon />
                 </IconButton>
               }
@@ -60,4 +63,10 @@ TitlebarGridList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TitlebarGridList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    insertOrder:(order) => dispatch(insertOrder(order))
+  }
+};
+
+export default withStyles(styles)(connect(null,mapDispatchToProps)(TitlebarGridList));

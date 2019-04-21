@@ -116,7 +116,6 @@ class Accueil extends React.Component{
       } = this.props;
       //const {restaurants} = require('./base.json');
       let restaurantsfiltered =  Object.keys(this.state.restaurants);
-      console.log(restaurantsfiltered);
       let restaurants = this.state.inputValue != "" ? restaurantsfiltered.filter(key=>this.state.restaurants[key].nom.toLowerCase().includes(this.state.inputValue.toLowerCase())) : restaurantsfiltered;
       
       
@@ -195,7 +194,6 @@ class Accueil extends React.Component{
                 ))}
               </Grid>
             </main>
-            <Footer></Footer>
           </React.Fragment>
         );
     }

@@ -32,11 +32,8 @@ class ComplexGrid extends React.Component{
     }
     render(){
         const { classes,
-        nom,
-        prix,
-        entree,
-        plat,
-        dessert} = this.props;
+        menu,
+        insert} = this.props;
         return (
             <div className={classes.root}>
             <Paper className={classes.paper}>
@@ -45,18 +42,18 @@ class ComplexGrid extends React.Component{
                     <Grid item xs container direction="column" spacing={16}>
                     <Grid item xs>
                         <Typography gutterBottom variant="subtitle1">
-                        {nom}
+                        {menu.nom}
                         </Typography>
-                        <Typography gutterBottom variant="subtitle2">{entree}</Typography>
-                        <Typography gutterBottom variant="subtitle2">{plat}</Typography>
-                        <Typography gutterBottom variant="subtitle2">{dessert}</Typography>
+                        <Typography gutterBottom variant="subtitle2">{menu.entree}</Typography>
+                        <Typography gutterBottom variant="subtitle2">{menu.plat}</Typography>
+                        <Typography gutterBottom variant="subtitle2">{menu.dessert}</Typography>
                     </Grid>
                     <Grid item>
-                        <Button color="primary" style={{cursor: 'pointer' }}>Commander</Button>
+                        <Button onClick={()=>insert(menu)}color="primary" style={{cursor: 'pointer' }}>Commander</Button>
                     </Grid>
                     </Grid>
                     <Grid item>
-                    <Typography variant="subtitle1">{prix}</Typography>
+                    <Typography variant="subtitle1">{menu.prix}</Typography>
                     </Grid>
                 </Grid>
                 </Grid>

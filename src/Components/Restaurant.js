@@ -37,6 +37,7 @@ import ComplexGrid from './Grids/ComplexGrid';
 import {connect} from 'react-redux';
 import base from './../base';
 
+import { insertOrder } from './../store/actions/orderActions';
 const styles = theme => ({
   '@global': {
     body: {
@@ -152,109 +153,12 @@ class Restaurant extends React.Component{
   }
 
     render(){
-      const { match: { params } } = this.props;
-      let restaurantsList =  this.state.restaurants;
-      let restaurant = restaurantsList.find(restaurant => restaurant.index == params.id);
+      const { match: { params }, classes , insertOrder, orders} = this.props;
       Restaurant.propTypes = {
         classes: PropTypes.object.isRequired,
       };
-      const { classes } = this.props;
-      const {restaurants} = require('./../base.json');
-    const tiers = [
-        {
-          title: 'Free',
-          price: '0',
-          description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support'],
-          buttonText: 'Sign up for free',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Pro',
-          subheader: 'Most popular',
-          price: '15',
-          description: [
-              '20 users included',
-              '10 GB of storage',
-              'Help center access',
-              'Priority email support',
-          ],
-          buttonText: 'Get started',
-          buttonVariant: 'contained',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        },
-        {
-          title: 'Enterprise',
-          price: '30',
-          description: [
-              '50 users included',
-              '30 GB of storage',
-              'Help center access',
-              'Phone & email support',
-          ],
-          buttonText: 'Contact us',
-          buttonVariant: 'outlined',
-        }
-    ];
-    const infos = {
+      console.log("orders "+ orders);
+          const infos = {
         title : 'Recherchez un restaurant',
         searchPlaceholder : 'Recherche...',
         description: 'Find Resto est une application web qui permet de vous chercher un restaurant du type de cuisine que vous voulez.',
@@ -274,6 +178,10 @@ class Restaurant extends React.Component{
       id += 1;
       return { id, name, calories, fat, carbs, protein };
     }
+    
+    let restaurantsList =  this.state.restaurants;
+    console.log(JSON.stringify(restaurantsList));
+    let restaurant = restaurantsList.find(restaurant => restaurant.index == params.id);
 
     //let restaurant =  Object.keys(this.state.restaurant);
 
@@ -299,17 +207,14 @@ class Restaurant extends React.Component{
                     </Typography>
                     {restaurant.menus.map(row=>(
                       <ComplexGrid
-                        nom={row.nom}
-                        prix = {row.prix}
-                        entree={row.entree}
-                        plat = {row.plat}
-                        dessert = {row.dessert}
+                        menu={row}
+                        insert={()=>insertOrder(row)}
                       ></ComplexGrid>
                     ))}
                   </Grid>
                   <Grid item xs={12} sm={6} md={5}>
                     <Typography variant="h2" align="center" color="primary" gutterBottom>
-                        Plats
+                        Carte
                     </Typography>
                     <FullWidthTabs
                     plats={restaurant.carte.plats}></FullWidthTabs>
@@ -329,10 +234,10 @@ class Restaurant extends React.Component{
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {rows.map(row => (
+                        {orders.map(row => (
                           <TableRow className={classes.row} key={row.id}>
                             <CustomTableCell component="th" scope="row">
-                              {row.name}
+                              {row.nom}
                             </CustomTableCell>
                             <CustomTableCell align="right">{row.calories}</CustomTableCell>
                             <CustomTableCell align="right">{row.fat}</CustomTableCell>
@@ -345,19 +250,24 @@ class Restaurant extends React.Component{
                   </Grid>
               </Grid>
             </main>
-            <Footer></Footer>
           </React.Fragment>
         );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const id = ownProps.match.params.id;
-  const restaurant = state.restaurant.restaurants.find(r => r.index == id);
+  const orders = state.order.orders;
   return{
-    restaurant : restaurant
+    orders : orders
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    insertOrder:(order) => dispatch(insertOrder(order))
   }
 };
 
 
-export default withStyles(styles)(connect(mapStateToProps,null)(Restaurant));
+
+export default withStyles(styles)(connect(mapStateToProps,mapDispatchToProps)(Restaurant));

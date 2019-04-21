@@ -50,7 +50,6 @@ class FullWidthTabs extends React.Component {
       let typePlats = plats.filter(plat => plat.type == "plat");
       let entrees = plats.filter(plat => plat.type == "entrée");
       let dessert = plats.filter(plat => plat.type == "dessert");
-      console.log("plats "+ JSON.stringify(plats));
 
     return (
       <div className={classes.root}>
