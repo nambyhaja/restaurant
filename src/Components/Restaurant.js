@@ -115,6 +115,10 @@ const styles = theme => ({
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
+  root:{
+    height:600,
+    overflow: 'scroll'
+  }
 });
 
 const CustomTableCell = withStyles(theme => ({
@@ -139,19 +143,13 @@ class Restaurant extends React.Component{
   routeChange(path) {
     this.props.history.push(path);
   }
-  componentWillMount(){
-    this.ref = base.syncState("restaurants", {
-      context: this,
-      state: 'restaurants'
+  total(orders){
+    let somme = 0;
+    orders.forEach(element => {
+      somme +=Number(element.prix.split('$')[1]);
     });
+    return somme;
   }
-
-  
-  componentWillUnmount() {
-    //console.log("Will unmount")
-    base.removeBinding(this.ref);
-  }
-
     render(){
       const { match: { params }, classes , insertOrder, orders} = this.props;
       Restaurant.propTypes = {
@@ -180,7 +178,6 @@ class Restaurant extends React.Component{
     }
     
     let restaurantsList =  this.state.restaurants;
-    console.log(JSON.stringify(restaurantsList));
     let restaurant = restaurantsList.find(restaurant => restaurant.index == params.id);
 
     //let restaurant =  Object.keys(this.state.restaurant);
@@ -238,8 +235,7 @@ class Restaurant extends React.Component{
                         <TableRow>
                           <CustomTableCell>Plat</CustomTableCell>
                           <CustomTableCell align="center">Unité</CustomTableCell>
-                          <CustomTableCell align="center">Prix unitaire</CustomTableCell>
-                          <CustomTableCell align="center">Prix total</CustomTableCell>
+                          <CustomTableCell align="center">Prix</CustomTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -248,20 +244,33 @@ class Restaurant extends React.Component{
                             <CustomTableCell component="th" scope="row">
                               {row.nom}
                             </CustomTableCell>
-                            <CustomTableCell align="right">{row.calories}</CustomTableCell>
-                            <CustomTableCell align="right">{row.fat}</CustomTableCell>
-                            <CustomTableCell align="right">{row.carbs}</CustomTableCell>
+                            <CustomTableCell align="right">1</CustomTableCell>
+                            <CustomTableCell align="right">{row.prix}</CustomTableCell>
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
                   </Paper>
+                  <Typography align="right" variant="h5">
+                          Total : $ {this.total(orders)}
+                  </Typography>
                   </Grid>
               </Grid>
             </main>
           </React.Fragment>
         );
     }
+    
+  componentWillMount(){
+    this.ref = base.syncState("restaurants", {
+      context: this,
+      state: 'restaurants'
+    });
+  }
+  componentWillUnmount() {
+    //console.log("Will unmount")
+    base.removeBinding(this.ref);
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {
