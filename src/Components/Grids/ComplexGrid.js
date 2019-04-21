@@ -44,7 +44,7 @@ class ComplexGrid extends React.Component{
                         <Typography gutterBottom variant="subtitle1">
                         {menu.nom}
                         </Typography>
-                        <Typography gutterBottom variant="subtitle2">Enrée : {menu.entree}</Typography>
+                        <Typography gutterBottom variant="subtitle2">Entrée : {menu.entree}</Typography>
                         <Typography gutterBottom variant="subtitle2">Plat : {menu.plat}</Typography>
                         <Typography gutterBottom variant="subtitle2">Dessert : {menu.dessert}</Typography>
                     </Grid>
