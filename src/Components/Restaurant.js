@@ -158,7 +158,6 @@ class Restaurant extends React.Component{
       Restaurant.propTypes = {
         classes: PropTypes.object.isRequired,
       };
-      console.log("orders "+ orders);
           const infos = {
         title : 'Recherchez un restaurant',
         searchPlaceholder : 'Recherche...',
