@@ -93,25 +93,7 @@ class NavBar extends React.Component{
                 Find Resto
               </Link>
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
-            </div>
             <div className={classes.grow} />
-              <Button>
-                  <Link className={classes.link} to="/admin/login">Login</Link>
-              </Button>
-              <Button color="inherit" variant="outlined">
-                    <Link className={classes.link} color="inherit" to="/admin/login">Login</Link>
-              </Button>
           </Toolbar>
         </AppBar> 
       </div>

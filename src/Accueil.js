@@ -182,6 +182,15 @@ class Accueil extends React.Component{
                           <Typography component="p">
                             {this.state.restaurants[key].description}
                           </Typography>
+                          <Typography variant="caption">
+                            Cuisine : {this.state.restaurants[key].cuisine}
+                          </Typography>
+                          <Typography variant="caption">
+                            Adresse : {this.state.restaurants[key].adresse}
+                          </Typography>
+                          <Typography variant="caption">
+                            Téléphone : {this.state.restaurants[key].telephone}
+                          </Typography>
                         </CardContent>  
                       </CardActionArea>
                       <CardActions>

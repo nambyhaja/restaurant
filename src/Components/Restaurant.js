@@ -198,6 +198,15 @@ class Restaurant extends React.Component{
                 <Typography variant="subtitle1" align="center" color="textPrimary" gutterBottom>
                     {restaurant.description}
                 </Typography>
+                <Typography variant="subtitle1" align="center" color="textPrimary" gutterBottom>
+                    Cuisine : {restaurant.cuisine}
+                </Typography>
+                <Typography variant="subtitle1" align="center" color="textPrimary" gutterBottom>
+                    Adresse : {restaurant.adresse}
+                </Typography>
+                <Typography variant="subtitle1" align="center" color="textPrimary" gutterBottom>
+                    Téléphone : {restaurant.telephone}
+                </Typography>
               </div>
               {/* End hero unit */}
               <Grid container spacing={40} alignItems="flex-start">
