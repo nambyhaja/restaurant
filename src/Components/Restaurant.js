@@ -143,6 +143,9 @@ class Restaurant extends React.Component{
   routeChange(path) {
     this.props.history.push(path);
   }
+  refresh(){
+    this.forceUpdate();
+  }
   total(orders){
     let somme = 0;
     orders.forEach(element => {
@@ -229,6 +232,9 @@ class Restaurant extends React.Component{
                   <Typography variant="h2" align="center" color="primary" gutterBottom>
                       Commande
                   </Typography>
+                  <Button color="primary" onClick={this.refresh.bind(this)}>
+                    Rafraîchir commande
+                  </Button>
                   <Paper className={classes.root}>
                     <Table className={classes.table}>
                       <TableHead>
